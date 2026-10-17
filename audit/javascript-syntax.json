@@ -1,0 +1,132 @@
+[
+  {
+    "file": "js/access.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/allProjects.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/assign.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/auth.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/customer.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/ddetails.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/details.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/directors.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/eas.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/helpers.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/home.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/main.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/manager.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/pdetails.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/produce.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/producetab.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/product.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/profile.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/project.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/showprj.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/store.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/supplier.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/tender.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/tender0.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/trade.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  },
+  {
+    "file": "js/transact.js",
+    "exit_code": 0,
+    "diagnostic": ""
+  }
+]

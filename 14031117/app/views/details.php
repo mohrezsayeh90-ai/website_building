@@ -1,0 +1,784 @@
+<?php $this->includeFile('layouts/partials/header');
+$this->includeFile('layouts/partials/open-tags-tmp');
+global $flashMessage;
+?>
+<div id="mydrpbH_1" class="ltr z-10 hidden w-48 bg-white divide-y divide-gray-100
+                                                    rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+     style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 10px);"
+     data-popper-reference-hidden=""
+     data-popper-escaped="" data-popper-placement="bottom">
+    <input type="hidden" id="row_typem" value="">
+    <ul class="p-3 space-y-1  text-gray-700 dark:text-gray-200" aria-labelledby="mydrpb_1">
+        <li>
+            <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                <input id="radio_4_1" type="radio" value="" name="radio_1" class="w-4 h-4 text-blue-600
+                bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700
+                focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                <label for="radio_4_1" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">VCB</label>
+            </div>
+        </li>
+        <li>
+            <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                <input id="radio_4_2" type="radio" value="" name="radio_1" class="w-4 h-4 text-blue-600
+                bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700
+                dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                <label for="radio_4_2" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Accessories</label>
+            </div>
+        </li>
+        <li>
+            <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                <input id="radio_4_3" type="radio" value="" name="radio_1"
+                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                <label for="radio_4_3" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Normal</label>
+            </div>
+        </li>
+        <li>
+            <hr>
+        </li>
+        <li>
+            <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                <input id="radio_4_4" type="radio" value="" name="radio_1"
+                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                <label for="radio_4_4" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Foreign Accessories</label>
+            </div>
+        </li>
+        <li>
+            <hr>
+        </li>
+        <li>
+            <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+
+                <i id="deletethisRow" class="fa fa-close cursor-pointer text-red-600 fa-2xl ml-4 mt-3">Delete
+                    this row</i>
+
+            </div>
+        </li>
+        <li>
+            <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+
+                <i id="insertNewRow" class="fa fa-plus-square cursor-pointer text-blue-400 fa-2xl ml-4 mt-3">Insert new
+                    row</i>
+
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div id="my-search-list00"
+     class="z-20 absolute flex flex-wrap ltr mt-3 text-sm font-medium
+     text-left text-gray-500 border-1 bg-gray-200 border-gray-400 dark:border-gray-700 dark:text-gray-400 "
+     style="max-height:500px;--width:65%;top: 32px;margin-right: 168px;display: none;min-width:300px ; overflow-y: scroll">
+    <i class="fa fa-circle animate-bounce"></i>
+    <ul class="list-none p-2" id="search-result00">
+        <?php
+        foreach ($materials[2] as $description) {
+            ?>
+            <li class="ml-2 hover:bg-black hover:text-white cursor-pointer"><?= $description['description'] ?></li>
+            <?php
+        }
+        ?>
+    </ul>
+</div>
+<div id="my-search-list10"
+     class="z-20 absolute flex flex-wrap ltr mt-3 text-sm font-medium
+     text-left text-gray-500 border-1 bg-gray-200 border-gray-400 dark:border-gray-700 dark:text-gray-400 "
+     style="max-height:500px;--width:65%;top: 32px;margin-right: 168px;display: none;min-width:300px ; overflow-y: scroll">
+    <i class="fa fa-circle animate-bounce"></i>
+    <ul class="list-none p-2" id="search-result10">
+        <?php
+        foreach ($materials[3] as $description) {
+            ?>
+            <li class="ml-2 hover:bg-black hover:text-white cursor-pointer"><?= $description['description'] ?></li>
+            <?php
+        }
+        ?>
+    </ul>
+</div>
+
+<div id="my-search-list01"
+     class="z-20 absolute flex flex-wrap ltr mt-3 text-sm font-medium text-left text-gray-500 border-1 bg-gray-200
+     border-gray-400 dark:border-gray-700 dark:text-gray-400"
+     style="max-height:500px;--width:65%;top: 32px;margin-right: 168px;display: none;min-width:300px; overflow-y: scroll">
+    <i class="fa fa-circle animate-bounce"></i>
+    <ul class="list-none p-2" id="search-result01">
+        <?php
+        foreach ($materials[4] as $mtype) {
+            ?>
+            <li aria-label="<?= $mtype['clue'] ?>"
+                class="ml-2 hover:bg-black hover:text-white cursor-pointer"><?= $mtype['type'] ?></li>
+            <?php
+        }
+        ?>
+    </ul>
+</div>
+<div id="my-search-list11"
+     class="z-20 absolute flex flex-wrap ltr mt-3 text-sm font-medium text-left text-gray-500 border-1 bg-gray-200
+     border-gray-400 dark:border-gray-700 dark:text-gray-400"
+     style="max-height:500px;--width:65%;top: 32px;margin-right: 168px;display: none;min-width:300px; overflow-y: scroll">
+    <i class="fa fa-circle animate-bounce"></i>
+    <ul class="list-none p-2" id="search-result11">
+        <?php
+        foreach ($materials[5] as $mtype) {
+            ?>
+            <li aria-label="<?= $mtype['clue'] ?>"
+                class="ml-2 hover:bg-black hover:text-white cursor-pointer"><?= $mtype['type'] ?></li>
+            <?php
+        }
+        ?>
+    </ul>
+</div>
+<div id="my-search-list02"
+     class="z-20 absolute flex flex-wrap ltr mt-3 text-sm font-medium text-left text-gray-500 border-1 bg-gray-200
+     border-gray-400 dark:border-gray-700 dark:text-gray-400"
+     style="max-height:500px;--width:65%;top: 32px;margin-right: 168px;display: none;min-width:300px; overflow-y: scroll">
+    <i class="fa fa-circle animate-bounce"></i>
+    <ul class="list-none p-2" id="search-result02">
+        <?php
+        foreach ($materials[6] as $manf) {
+            ?>
+            <li aria-label="<?= $manf['clue'] ?>"
+                class="ml-2 hover:bg-black hover:text-white cursor-pointer"><?= $manf['manufacturer'] ?></li>
+            <?php
+        }
+        ?>
+    </ul>
+</div>
+<div id="my-search-list12"
+     class="z-20 absolute flex flex-wrap ltr mt-3 text-sm font-medium text-left text-gray-500 border-1 bg-gray-200
+     border-gray-400 dark:border-gray-700 dark:text-gray-400"
+     style="max-height:500px;--width:65%;top: 32px;margin-right: 168px;display: none;min-width:300px; overflow-y: scroll">
+    <i class="fa fa-circle animate-bounce"></i>
+    <ul class="list-none p-2" id="search-result12">
+        <?php
+        foreach ($materials[7] as $manf) {
+            ?>
+            <li aria-label="<?= $manf['clue'] ?>"
+                class="ml-2 hover:bg-black hover:text-white cursor-pointer"><?= $manf['manufacturer'] ?></li>
+            <?php
+        }
+        ?>
+    </ul>
+</div>
+<div class="container my-4"
+     style="<?= isset($_GET['margin']) && $_GET['margin'] == 10 ? ';margin-right:-30px !important;width:1280px !important;background:white !important' : '' ?>">
+    <div id="accordion-open" data-accordion="open">
+        <h2 id="accordion-open-heading-1" class="no-print">
+            <button type="button" class="flex  items-center justify-between w-full p-1 font-medium rtl:text-right text-gray-500 border border-b-0
+            border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400
+             hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-open-body-1"
+                    aria-expanded="false" aria-controls="accordion-open-body-1">
+                <span class="flex items-center"><svg class="w-5 h-5 me-2 shrink-0" fill="currentColor"
+                                                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path
+                                fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                                clip-rule="evenodd"></path></svg>
+                    <?= $materials[0]['name'] ?><i class="text-3xl">EPL</i></span>
+                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 5 5 1 1 5"/>
+                </svg>
+            </button>
+        </h2>
+        <div id="accordion-open-body-1" class="<?= isset($_GET['margin']) ? '' : 'hidden' ?>"
+             aria-labelledby="accordion-open-heading-1">
+            <div class="flex items-center w-full <?= isset($_GET['title']) ? 'text-xs' : '' ?>">
+                <div class="basis-1/3 md:pl-3">
+                    <div style="margin-top=0px" class="bg-gradient-to-br from-white to-slate-100 text-center px-4 border py-1
+                    border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <a href="#">
+                            <img style="height:96px !important" class="rounded-t-lg  mx-auto w-auto h-auto h-24"/>
+                        </a>
+                        <h6 class="mb-3 mt-2 font-normal text-this-gray dark:text-gray-400 ltr">CONSULTANT: -</h6>
+                    </div>
+                </div>
+                <div class="basis-1/3 md:pl-3">
+                    <div class="bg-gradient-to-br from-white to-slate-100 text-center px-4 py-1 border
+                    border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <a href="#">
+                            <img class="rounded-t-lg mx-auto w-auto max-h-24"
+                                 src="<?= $this->asset('images/picture3.png') ?>" alt="لوگوی تولید کننده"/>
+                        </a>
+                        <h6 class="mb-3 mt-2 font-normal text-this-gray dark:text-gray-400 ltr">MANUFACTURER: MEHRABAD
+                            INDUSTRIAL CO.</h6>
+                    </div>
+                </div>
+                <div class="basis-1/3">
+                    <div class="bg-gradient-to-br from-white to-slate-100 text-center px-4 border py-1
+                    border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <a href="#">
+                            <img class="rounded-t-lg mx-auto w-auto max-h-24"
+                                 src="<?= $this->asset('images/customers/' . $materials[0]['logo']) ?>"
+                                 alt="لوگوی مشتری"/>
+                        </a>
+                        <h6 class="mb-3 mt-2 font-normal text-this-gray dark:text-gray-400 ltr">
+                            CLIENT: <?= $materials[0]['ename'] ?></h6>
+                    </div>
+                </div>
+            </div>
+            <table class="border border-slate-400 border-collapse table-fixed bg-white mt-4 w-full ltr <?= isset($_GET['title']) ? 'text-xs' : '' ?> text-this-gray">
+                <tr>
+                    <td class="border-slate-400 border px-1">
+                        <p class="text-start">DOCUMENT NO.:<?= $materials[0]['code'] ?></p>
+                    </td>
+                    <td class="border-slate-400 border px-1">
+                        <p id="thistabTile" class="text-left ">DOCUMENT TITLE:
+                            <?= isset($_GET['title']) ? $_GET['title'] : $materials[1][0]['voltage'] . ' ' . $materials[1][0]['name'] . ' ' . $materials[1][0]['crnt'] ?></p>
+                    </td>
+                    <td class="border-slate-400 border px-1">
+                        <p class="text-start">REVISION: 01</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="border-slate-400 border px-1" colspan="2">
+                        <p class="text-start">PROJECT NAME: :<?= $materials[0]['name'] ?></p>
+                    </td>
+                    <td class="border-slate-400 border px-1">
+                        <p class="text-start">DATE: <?= str_replace("/", "/ ", $materials[0]['trkh']) ?></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="container h-100">
+    <input type="hidden" id="tender_code" value="<?= $materials[0]['code'] ?>">
+    <div class="flex flex-row rtl text-3xl ml-5 border-b-2 no-print">
+        <i data-tooltip-target="tender_finalize_t" id="saveAllSheets" class="mr cursor-pointer fa fa-save
+         h-auto relative z-0 rounded-lg transition-all duration-300 hover:scale-150"></i>
+        <?php
+        if($materials[0]['product_extraction']==0){
+        ?>
+        <i data-tooltip-target="tender_finalize_tupld" id="productExtraction" class="ms-4 cursor-pointer fa fa-cloud-upload
+         h-auto relative z-0 rounded-lg transition-all duration-300 hover:scale-150"></i>
+        <?php
+        }
+        ?>
+        <i data-tooltip-target="tender_finalize_t1" id="reloadAllSheets" class="fa fa-refresh cursor-pointer ms-4 h-auto relative z-0 rounded-lg
+        transition-all duration-300 hover:scale-150"></i>
+        <i data-tooltip-target="tender_finalize_t2" id="createmyExcelfile" class="fa fa-download cursor-pointer ms-4 h-auto relative z-0 rounded-lg
+        transition-all duration-300 hover:scale-150"></i>
+        <i data-tooltip-target="tender_finalize_t10" id="createmyPdffile" class="fa fa-file-text cursor-pointer ms-4 h-auto relative z-0 rounded-lg
+        transition-all duration-300 hover:scale-150"></i>
+        <i id="ender_return" onclick="gototheList()" data-tooltip-target="tender_return" class="cursor-pointer float-end fa fa-share-square-o
+ h-auto relative z-0 rounded-lg transition-all duration-300 hover:scale-150 mr-10"></i>
+    </div>
+    <div id="tender_finalize_t" role="tooltip"
+         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium
+                                            text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+        ثبت تغییرات
+        <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
+    <div id="tender_finalize_tupld" role="tooltip"
+         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium
+                                            text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+        بارگذاری داده ها از مناقصات قبلی
+        <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
+    <div id="tender_finalize_t1" role="tooltip"
+         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium
+                                            text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+        بازنشانی مجدد از دیتابیس
+        <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
+    <div id="tender_finalize_t2" role="tooltip"
+         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium
+                                            text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+        دانلود فایل
+        <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
+    <div id="tender_finalize_t10" role="tooltip"
+         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium
+                                            text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+        فایل PDF
+        <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
+
+    <div id="tender_return" role="tooltip"
+         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium
+                                            text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+        بازگشت
+        <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
+    <div class="ltr text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+        <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200
+        dark:border-gray-700 dark:text-gray-400 no-print" id="alltabsMain"
+            data-tabs-toggle="#default-styled-tab-content"
+            data-tabs-active-classes="text-purple-600"
+            data-tabs-inactive-classes="dark:border-transparent text-this-gray hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300"
+            role="tablist">
+            <?php
+            $tabcnt = 0;
+            foreach ($materials[1] as $key => $material) {
+                ?>
+                <li class="me-2" role="presentation">
+                    <button class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500"
+                            onclick="setTitle(<?= $key ?>)"
+                            id="<?= str_replace(array(' ','&',';',"\\","/",','), '', $material['mah_cod']) ?>-styled-tab"
+                            data-tabs-target="#styled-<?= str_replace(array(' ','&',';',"\\","/",','), '', $material['mah_cod']) ?>" type="button"
+                            role="tab"
+                            aria-controls="<?= str_replace(array(' ','&',';',"\\","/",','), '', $material['mah_cod']) ?>"
+                            aria-selected="false"><?= $material['name'] ?>
+                    </button>
+                    <input type="hidden" value="<?= $material['code'] ?>" id="prd_ten_<?= $key ?>">
+                    <input type="hidden"
+                           value="<?= isset($_GET['title']) ? $_GET['title'] : $material['voltage'] . ' ' . $material['name'] . ' ' . $material['crnt'] ?>"
+                           id="prd_ten_title_<?= $key ?>">
+                </li>
+                <?php
+                $tabcnt++;
+            }
+            ?>
+            <li role="presentation">
+                <button class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500"
+                        onclick="setTitle(<?= $tabcnt ?>,2)" id="materials-styled-tab"
+                        data-tabs-target="#styled-materials" type="button" role="tab"
+                        aria-controls="materials" aria-selected="false">Materials
+                </button>
+                <input type="hidden" value="Materials List" id="prd_ten_title_<?= $tabcnt ?>">
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div style="<?= isset($_GET['margin']) && $_GET['margin'] == 10 ? ';background:white !important' : '' ?>"
+     class="relative w-full">
+    <div style="<?= isset($_GET['margin']) && $_GET['margin'] == 10 ? ';background:white !important' : '' ?>"
+         class="my-scroll-parent scroll1">
+        <div style="<?= isset($_GET['margin']) && $_GET['margin'] == 10 ? ';background:white !important' : '' ?>"
+             class="my-scroll-div w-full">
+            <div class="container"
+                 style="<?= isset($_GET['margin']) && $_GET['margin'] == 10 ? ';margin-right:-30px !important;width:1280px !important;background:white' : '' ?>">
+                <div id="default-styled-tab-content">
+                    <?php
+                    $tabn = 0;
+                    foreach ($materials[1] as $key => $material) {
+                        ?>
+                        <div style="<?= isset($_GET['activesheet']) && $_GET['activesheet'] == $key ? 'display:block !important' : (isset($_GET['margin']) ? 'display:none !important' : '') ?>"
+                             class="hidden  rounded-lg dark:bg-gray-800"
+                             id="styled-<?= str_replace(array(' ','&',';',"\\","/",','), '', $material['mah_cod']) ?>"
+                             role="tabpanel"
+                             aria-labelledby="<?= str_replace(array(' ','&',';',"\\","/",','), '', $material['mah_cod']) ?>-tab">
+                            <div class=" ltr">
+                                <div class="colorful-counter mb-1"></div>
+                                <div class="inline-block mt-1 mr-2 hidden">
+                                    <i class="bi bi-plus-circle hover:text-purple-900"></i>
+                                </div>
+                                <table id="detail_table"
+                                       class="w-full  border border-collapse border-slate-400 text-end">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th colspan="2" style="width:50px !important"
+                                            class="border border-slate-500 bg-gray-300 py-1 px-1" scope="col"
+                                            rowspan="2">ITEM
+                                        </th>
+                                        <th style="width:180px !important"
+                                            class="border border-slate-500 bg-gray-300 py-1 px-1" scope="col"
+                                            rowspan="2" colspan="4">DESCRIPTION
+                                        </th>
+                                        <th style="width:300px !important"
+                                            class="border border-slate-500 bg-gray-300 py-1 px-1" scope="col"
+                                            rowspan="2" colspan="6">TECHNICAL SPECIFICATION
+                                        </th>
+                                        <th style="width:60px !important" colspan="2"
+                                            class="border border-slate-500 bg-gray-300 py-1 px-1" scope="col"
+                                            rowspan="2">Manufaturer
+                                        </th>
+                                        <th style="width:70px !important" colspan="1"
+                                            class="border border-slate-500  bg-gray-300 py-1 px-1" scope="col"
+                                            rowspan="2">QTY
+                                        </th>
+                                        <?php
+                                        if (!isset($_GET['margin'])) {
+                                            ?>
+                                            <th style="width:60px !important" colspan="2"
+                                                class="border border-slate-500 bg-gray-400 py-1 px-1" scope="col">PRICE
+                                                I
+                                            </th>
+                                            <th style="width:80px !important" colspan="3"
+                                                class="border border-slate-500 bg-gray-400 py-1 px-1" scope="col">PRICE
+                                                RIAL
+                                            </th>
+
+                                            <th style="width:200px !important" colspan="5"
+                                                class="border border-slate-500 bg-gray-400 py-1 px-1" scope="col">TOTAL
+                                                PRICE
+                                            </th>
+                                            <th rowspan="2" class="border border-slate-500 bg-gray-400 py-1 px-1 no-print"></th>
+                                            <?php
+                                        }
+                                        ?>
+                                    </tr>
+                                    <?php
+                                    if (!isset($_GET['margin'])) {
+                                        ?>
+                                        <tr class="text-center">
+                                            <!--                                        <td class="border border-slate-500 bg-gray-300 py-1 px-1" colspan="2">--->
+                                            <!--                                        </td>-->
+                                            <td class="border border-slate-500 bg-gray-400 py-1 px-1" colspan="5">UNIT
+                                            </td>
+                                            <td style="width:60px !important" colspan="2"
+                                                class="border border-slate-500 bg-gray-400 py-1 px-1">€
+                                            </td>
+                                            <td style="width:120px !important" colspan="3"
+                                                class="border border-slate-500 bg-gray-400 py-1 px-1">RIAL
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                    </thead>
+                                    <tbody class="text-sm">
+
+                                    <?php
+
+                                    for ($row = 0; $row < 100; $row++) {
+                                        ?>
+                                        <tr class="text-center ml-2  <?php
+
+                                        if (($tabn >= count($materials[8]) || $materials[8][$tabn]['mah_cod'] != $material['code']) && isset($_GET['margin'])) {
+                                            echo "no-print";
+
+                                        }
+
+                                        ?>">
+                                            <td colspan="2" id="item_<?= $key . '-' . $row ?>"
+                                                style="width:50px !important"
+                                                class="border border-slate-300 font-sans <?php
+                                                if ($tabn < count($materials[8]) && $materials[8][$tabn]['mah_cod'] == $material['code']) {
+                                                    switch ($materials[8][$tabn]['row_type']) {
+                                                        case 'Normal':
+                                                            echo "bg-white";
+                                                            break;
+                                                        case "VCB":
+                                                            echo "bg-green-300";
+                                                            break;
+                                                        case "Accessories":
+                                                            echo "bg-red-200";
+                                                            break;
+                                                        case "Foreign Accessories":
+                                                            echo "bg-slate-200";
+                                                            break;
+                                                        default:
+                                                            echo "bg-white";
+
+                                                    }
+                                                }
+                                                ?> hover:border-gray-400">
+                                                <button id="mydrpb_<?= $key . '-' . $row ?>"
+                                                        class="text-black  focus:ring-1 focus:outline-none focus:ring-blue-300 font-sans rounded-lg
+         text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                                        type="button"><?= $row + 1 ?></button>
+                                                <input type="hidden" id="row_typem_<?= $key . '-' . $row ?>"
+                                                       value="<?php
+                                                       if ($tabn < count($materials[8]) && $materials[8][$tabn]['mah_cod'] == $material['code']) {
+                                                           echo $materials[8][$tabn]['row_type'];
+                                                       } ?>"></td>
+
+                                            <td style="width:180px !important" colspan="4"
+                                                class="border border-slate-300 bg-white hover:border-gray-400 ">
+                            <textarea id="cell_1_<?= $key . '_' . $row ?>"
+                                      class="h-full min-h-[50px] w-full resize-none border-b border-blue-gray-200
+                                       pt-4 pb-1.5 font-sans text-sm font-normal outline-0 placeholder-shown:border-blue-gray-200
+                                       focus:border-0 focus:ring-teal-400 focus:ring-2
+                                       focus:outline-0 disabled:resize-none
+                                       disabled:border-0
+                                       disabled:bg-blue-gray-50"><?php
+                                if ($tabn < count($materials[8]) && $materials[8][$tabn]['mah_cod'] == $material['code']) {
+                                    echo $materials[8][$tabn]['equip'];
+                                }
+                                ?></textarea>
+
+                                            </td>
+                                            <?php
+                                            if (isset($_GET['margin']) && $_GET['margin'] == 10) {
+                                                ?>
+                                                <td style="width:300px !important" colspan="6"
+                                                    class="border border-slate-300 bg-white hover:border-gray-400">
+                            <span id="cell_2_<?= $key . '_' . $row ?>"
+                                  class="h-full min-h-[50px] w-full resize-none border-b border-blue-gray-200
+                                       pt-4 pb-1.5 font-sans text-sm font-normal outline-0 placeholder-shown:border-blue-gray-200
+                                       focus:border-0 focus:ring-teal-400 focus:ring-2
+                                       focus:outline-0 disabled:resize-none
+                                       disabled:border-0
+                                       disabled:bg-blue-gray-50"><?php
+                                if ($tabn < count($materials[8]) && $materials[8][$tabn]['mah_cod'] == $material['code']) {
+                                    echo $materials[8][$tabn]['type'];
+
+                                }
+                                ?></span>
+                                                </td>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <td style="width:300px !important" colspan="6"
+                                                    class="border border-slate-300 bg-white hover:border-gray-400">
+                            <textarea id="cell_2_<?= $key . '_' . $row ?>"
+                                      class="h-full min-h-[50px] w-full resize-none border-b border-blue-gray-200
+                                       pt-4 pb-1.5 font-sans text-sm font-normal outline-0 placeholder-shown:border-blue-gray-200
+                                       focus:border-0 focus:ring-teal-400 focus:ring-2
+                                       focus:outline-0 disabled:resize-none
+                                       disabled:border-0
+                                       disabled:bg-blue-gray-50"><?php
+                                if ($tabn < count($materials[8]) && $materials[8][$tabn]['mah_cod'] == $material['code']) {
+                                    echo $materials[8][$tabn]['type'];
+
+                                }
+                                ?></textarea>
+                                                </td>
+                                                <?php
+                                            }
+                                            ?>
+                                            <td style="width:60px !important" colspan="2"
+                                                class="border border-slate-300 bg-white hover:border-gray-400 max-w-fit">
+                            <textarea id="cell_3_<?= $key . '_' . $row ?>"
+                                      class="h-full min-h-[50px] w-full resize-none border-b border-blue-gray-200
+                                       pt-4 pb-1.5 font-sans text-sm font-normal outline-0 placeholder-shown:border-blue-gray-200
+                                       focus:border-0 focus:ring-teal-400 focus:ring-2
+                                       focus:outline-0 disabled:resize-none
+                                       disabled:border-0
+                                       disabled:bg-blue-gray-50"><?php
+                                if ($tabn < count($materials[8]) && $materials[8][$tabn]['mah_cod'] == $material['code']) {
+                                    echo $materials[8][$tabn]['manufact'];
+
+                                }
+                                ?></textarea>
+
+                                            </td>
+                                            <td style="width:60px !important" colspan="1"
+                                                class="border border-slate-500 bg-white hover:border-gray-400">
+                            <textarea id="cell_4_<?= $key . '_' . $row ?>"
+                                      class="h-full min-h-[50px] w-full resize-none border-b border-blue-gray-200
+                                       pt-4 pb-1.5 font-sans text-sm font-normal outline-0 placeholder-shown:border-blue-gray-200
+                                       focus:border-0 focus:ring-teal-400 focus:ring-2
+                                       focus:outline-0 disabled:resize-none
+                                       disabled:border-0
+                                       disabled:bg-blue-gray-50"><?php
+                                if ($tabn < count($materials[8]) && $materials[8][$tabn]['mah_cod'] == $material['code']) {
+                                    echo $materials[8][$tabn]['qty'] == 0 ? $material['tedad'] : $materials[8][$tabn]['qty'];
+                                    if (isset($_GET['margin'])) $tabn++;
+                                }
+                                ?></textarea>
+
+                                            </td>
+                                            <?php
+                                            if (!isset($_GET['margin'])) {
+                                                ?>
+                                                <td style="width:60px !important" colspan="2"
+                                                    class="border border-slate-500 bg-gray-400 hover:border-gray-400 ">
+                            <textarea id="cell_5_<?= $key . '_' . $row ?>"
+                                      class="h-full min-h-[50px] w-full resize-none border-b border-blue-gray-200
+                                       pt-4 pb-1.5 font-sans text-sm font-normal outline-0 placeholder-shown:border-blue-gray-200
+                                       focus:border-0 focus:ring-teal-400 focus:ring-2
+                                       focus:outline-0 disabled:resize-none
+                                       disabled:border-0
+                                       disabled:bg-blue-gray-50"><?php
+                                if ($tabn < count($materials[8]) && $materials[8][$tabn]['mah_cod'] == $material['code']) {
+                                    echo number_format($materials[8][$tabn]['price_i'],1);
+
+                                }
+                                ?></textarea>
+
+                                                </td>
+
+                                                <td style="width:80px !important" colspan="3"
+                                                    class="border border-slate-500 bg-gray-400 hover:border-gray-400 ">
+                            <textarea id="cell_6_<?= $key . '_' . $row ?>"
+                                      class="h-full min-h-[50px] w-full resize-none border-b border-blue-gray-200
+                                       pt-4 pb-1.5 font-sans text-sm font-normal outline-0 placeholder-shown:border-blue-gray-200
+                                       focus:border-0 focus:ring-teal-400 focus:ring-2
+                                       focus:outline-0 disabled:resize-none
+                                       disabled:border-0
+                                       disabled:bg-blue-gray-50"><?php
+                                if ($tabn < count($materials[8]) && $materials[8][$tabn]['mah_cod'] == $material['code']) {
+                                    echo number_format($materials[8][$tabn]['price_r']);
+
+                                }
+                                ?></textarea>
+
+                                                </td>
+                                                <td colspan="2" id="cell_7_<?= $key . '_' . $row ?>"
+                                                    class="border border-slate-500 bg-gray-400 font-sans hover:border-gray-400 py-1 px-1"><?php
+                                                    if ($tabn < count($materials[8]) && $materials[8][$tabn]['mah_cod'] == $material['code']) {
+                                                        echo number_format($materials[8][$tabn]['price_i'] * ($materials[8][$tabn]['qty'] == 0 ? $material['tedad'] : $materials[8][$tabn]['qty']),1);
+                                                    }
+                                                    ?></td>
+                                                <td colspan="3" id="cell_8_<?= $key . '_' . $row ?>"
+                                                    class="border border-slate-500 bg-gray-400 font-sans hover:border-gray-400 py-1 px-1"><?php
+                                                    if ($tabn < count($materials[8]) && $materials[8][$tabn]['mah_cod'] == $material['code']) {
+                                                        echo number_format($materials[8][$tabn]['price_r'] * ($materials[8][$tabn]['qty'] == 0 ? $material['tedad'] : $materials[8][$tabn]['qty']));
+                                                        $tabn++;
+                                                    }
+                                                    ?></td>
+                                                <td style="width:20px" class="no-print border border-black bg-yellow-100">
+                                                    <i onclick="openHistory(<?=$key?>,<?=$row?>)" class="fa fa-history " title="Show price history"></i></td>
+                                                <?php
+                                            }
+                                            ?>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                                <div id="sumOFF"
+                                     class="<?= isset($_GET['margin']) ? 'hidden' : '' ?> fixed bottom-0 left-0 right-0  print:static print:top-0">
+                                    <div class="text-center font-sans total-sum bg-gray-400 print:bg-transparent flex flex-row mx-auto">
+                                        <div class="w-1/2 p-3">
+                                            <span> Total Price (€):</span>
+                                            <span id="cell_sum_i_<?= $key ?>" class="px-1">0</span>
+                                        </div>
+                                        <div class="w-1/2 p-3 border-l border-slate-500">
+                                            <span> Total Price (Rial):</span>
+                                            <span id="cell_sum_r_<?= $key ?>" class="px-1"
+                                                  colspan="1"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <div class="hidden font-sans rounded-lg dark:bg-gray-800" id="styled-materials" role="tabpanel"
+                         style="<?= isset($_GET['activesheet']) && $_GET['activesheet'] == $tabcnt ? 'display:block !important;background:white' : (isset($_GET['margin']) ? 'display:none !important' : '') ?>"
+                         aria-labelledby="materials-tab">
+                        <table id="material_table"
+                               class="w-full table-auto border border-collapse border-slate-400 text-end">
+                            <thead>
+                            <tr class="text-center">
+                                <?php
+                                if (!isset($_GET['margin'])) {
+                                    ?>
+                                    <th class="border border-slate-500 bg-gray-400 py-1 px-1" scope="col">Sell unit
+                                        Price
+                                    </th>
+                                    <th class="border border-slate-500 bg-gray-400 py-1 px-1" scope="col"
+                                        colspan="4"></th>
+                                    <?php
+                                }
+                                ?>
+                                <th class="border border-slate-500 bg-gray-300 py-1 px-1" scope="col" rowspan="2">QTY
+                                </th>
+                                <th class="border border-slate-500 bg-gray-300 py-1 px-1" scope="col" rowspan="2">
+                                    Description
+                                </th>
+                                <th class="border border-slate-500 bg-gray-300 py-1 px-1" scope="col" rowspan="2">Item
+                                </th>
+                            </tr>
+                            <?php
+                            if (!isset($_GET['margin'])) {
+                                ?>
+                                <tr class="text-center">
+                                    <td class="border border-slate-500 bg-gray-400 py-1 px-1">Rial</td>
+                                    <td class="border border-slate-500 bg-gray-400 py-1 px-1">VCB</td>
+                                    <td class="border border-slate-500 bg-gray-400 py-1 px-1">Foreign Accessories</td>
+                                    <td class="border border-slate-500 bg-gray-400 py-1 px-1">Foreign Parts</td>
+                                    <td class="border border-slate-500 bg-gray-400 py-1 px-1">Rial</td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                            </thead>
+                            <tbody class="text-sm">
+                            <?php
+                            $tedad = 0;
+                            foreach ($materials[1] as $key => $material) {
+                                $tedad += $material['tedad'];
+                                ?>
+
+                                <tr class="text-center">
+                                    <?php
+                                    if (!isset($_GET['margin'])) {
+                                        ?>
+                                        <td class="border border-slate-500 bg-gray-400 hover:border-gray-400 py-2 px-1">
+                                            0
+                                        </td>
+                                        <td id='vcb_panir_<?= $key ?>'
+                                            class="border border-slate-500 bg-gray-400 hover:border-gray-400 py-2 px-1">
+                                            0
+                                        </td>
+                                        <td id="pifor_tp_<?= $key ?>"
+                                            class="border border-slate-500 bg-gray-400 hover:border-gray-400 py-2 px-1">
+                                            0
+                                        </td>
+                                        <td id="pi_tp_<?= $key ?>"
+                                            class="border border-slate-500 bg-gray-400 hover:border-gray-400 py-2 px-1">
+                                            0
+                                        </td>
+                                        <td id="pr_tp_<?= $key ?>"
+                                            class="border border-slate-500 bg-gray-400 hover:border-gray-400 py-2 px-1">
+                                            0
+                                        </td>
+                                        <?php
+                                    }
+                                    ?>
+                                    <td id="tedad_<?=$key?>" class="border border-slate-300 bg-white hover:border-gray-400 h-fit"><?= $material['tedad'] ?></td>
+                                    <td class="border border-slate-300 bg-white hover:border-gray-400 ltr text-left pl-1 "><?= $material['name'] . ' ' .
+                                        $material['voltage'] . ' ' . $material['crnt'] . ' ' . $material['type1'] ?>
+                                    </td>
+                                    <td class="border border-slate-300 bg-white hover:border-gray-400"><?= $key + 1 ?>
+                                    </td>
+                                </tr>
+                                <?php
+                            } ?>
+
+                            <tr class="text-center total-sum bg-gray-400">
+                                <?php
+                                if (!isset($_GET['margin'])) {
+                                    ?>
+                                    <td class="border border-slate-500 px-1">0</td>
+                                    <td id="vcb_panir" class="border border-slate-500 px-1">0</td>
+                                    <td id="pifor_tp" class="border border-slate-500 px-1">0</td>
+                                    <td id="pi_tp" class="border border-slate-500 px-1">0</td>
+                                    <td id="pr_tp" class="border border-slate-500 px-1">0</td>
+                                    <?php
+                                }
+                                ?>
+                                <td class="border border-slate-500 px-1"><?= $tedad ?></td>
+                                <td class="border border-slate-500 py-3 px-1" colspan="3">
+                                    SUM
+                                </td>
+                            </tr>
+                            <?php
+                            if (!isset($_GET['margin'])) {
+                                ?>
+                                <tr class="text-center total-sum bg-gray-300">
+                                    <td class="border border-slate-500 px-1"></td>
+                                    <td class="border border-slate-500 px-1"></td>
+                                    <td class="border border-slate-500 px-1"></td>
+                                    <td class="border border-slate-500 px-1"></td>
+                                    <td class="border border-slate-500 px-1"></td>
+                                    <td class="border border-slate-500 py-3 px-1" colspan="3">
+                                        TAX(10%)
+                                    </td>
+                                </tr>
+                                <tr class="text-center total-sum bg-gray-300">
+                                    <td class="border border-slate-500 px-1"></td>
+                                    <td class="border border-slate-500 px-1"></td>
+                                    <td class="border border-slate-500 px-1"></td>
+                                    <td class="border border-slate-500 px-1"></td>
+                                    <td class="border border-slate-500 px-1"></td>
+                                    <td class="border border-slate-500 py-3 px-1" colspan="3">
+                                        Total Price
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<?php
+$this->includeFile('layouts/partials/back-to-top');
+$this->includeFile('layouts/partials/close-tags-tmp');
+$this->includeFile('layouts/scripts') ?>
+<script type="text/javascript" src="<?php $this->asset('js/details.js'); ?>"></script>
+
