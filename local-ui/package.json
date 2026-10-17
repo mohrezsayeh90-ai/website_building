@@ -1,0 +1,12 @@
+{
+  "name": "mehrabad-local-ui",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tailwindcss -c tailwind.config.cjs -i tools/utilities.css -o public/ui/utilities.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17",
+    "font-awesome": "4.7.0"
+  }
+}

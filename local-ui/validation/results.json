@@ -1,0 +1,25 @@
+{
+  "passed": [
+    "default current-project tab",
+    "project search",
+    "completed-project tab",
+    "project list to matching details",
+    "draft saved across reload",
+    "project data and drafts isolated",
+    "reset restores sample data",
+    "EPL navigation retains project code",
+    "DPL navigation retains project code",
+    "DCC limitation dialog with matching code",
+    "mobile menu navigation",
+    "mobile pages have no document overflow",
+    "functional flow has no page errors or HTTP errors",
+    "GET /mehrabad/prjman/show/?p=UNKNOWN: 404",
+    "GET /mehrabad/prjman/show/?p[]=P000001: 400",
+    "GET /router.php: 404",
+    "GET /source/project/showprj.php: 404",
+    "GET /mehrabad/assets/../app/controllers/DCC.php: 400",
+    "POST /mehrabad/prjman: 405"
+  ],
+  "count": 19,
+  "failed": 0
+}
