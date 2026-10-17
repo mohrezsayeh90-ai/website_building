@@ -1,0 +1,125 @@
+"""Browser regression checks for the demo list memory and EPL/DPL navigation.
+Requires Playwright and Chromium only for development, not normal app startup.
+"""
+import argparse
+import json
+import shutil
+import tempfile
+from pathlib import Path
+from urllib.parse import urlparse, parse_qs
+from playwright.sync_api import sync_playwright, expect
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--base-url', default='http://127.0.0.1:8033')
+parser.add_argument('--output', type=Path)
+args = parser.parse_args()
+out = args.output or Path(tempfile.mkdtemp(prefix='mehrabad-demo-check-'))
+out.mkdir(parents=True, exist_ok=True)
+base = args.base_url.rstrip('/')
+checks = []
+
+def ok(label):
+    checks.append(label)
+
+with sync_playwright() as p:
+    binary = shutil.which('chromium') or shutil.which('google-chrome')
+    options = {'headless': True}
+    if binary:
+        options.update(executable_path=binary, args=['--no-sandbox'])
+    browser = p.chromium.launch(**options)
+    for width, height in [(1440, 1000), (390, 844)]:
+        context = browser.new_context(viewport={'width': width, 'height': height})
+        page = context.new_page()
+        errors, failures = [], []
+        page.on('pageerror', lambda error: errors.append(str(error)))
+        page.on('response', lambda response: failures.append((response.url, response.status)) if response.status >= 400 else None)
+        page.goto(base + '/mehrabad/home', wait_until='networkidle')
+        expect(page.locator('.ui-project-card')).to_have_count(20)
+        ok(f'{width}: default landing has 20 test projects')
+        page.goto(base + '/mehrabad/prjman?mode=demo', wait_until='networkidle')
+        expect(page.locator('#current-project tbody tr')).to_have_count(16)
+        expect(page.locator('#completed-project tbody tr')).to_have_count(4)
+        ok(f'{width}: 16 current and 4 completed projects')
+        search = page.get_by_role('searchbox', name='جست‌وجوی پروژه‌ها')
+        search.fill('آفتاب')
+        expect(page.locator('#current-project tbody tr:visible')).to_have_count(3)
+        expect(page.locator('#ui-search-summary')).to_have_text('۳ پروژه')
+        ok(f'{width}: search narrows the list to three projects')
+        page.get_by_role('link', name='نمایش شناسنامهٔ P000002', exact=True).click()
+        expect(page.locator('#proj_code')).to_have_text('P000002')
+        page.go_back(wait_until='networkidle')
+        expect(search).to_have_value('آفتاب')
+        expect(page.locator('#current-project tbody tr:visible')).to_have_count(3)
+        ok(f'{width}: browser Back restores the same query and three results')
+        page.get_by_role('link', name='نمایش شناسنامهٔ P000001', exact=True).click()
+        page.get_by_role('link', name='بازگشت به پروژه‌ها', exact=True).click()
+        expect(search).to_have_value('آفتاب')
+        expect(page.locator('#current-project tbody tr:visible')).to_have_count(3)
+        ok(f'{width}: in-app Back restores the same three results')
+        page.reload(wait_until='networkidle')
+        expect(search).to_have_value('آفتاب')
+        expect(page.locator('#current-project tbody tr:visible')).to_have_count(3)
+        ok(f'{width}: reload preserves search')
+        page.screenshot(path=str(out / f'filtered-projects-{width}.png'), full_page=True)
+        row = page.locator('#current-project tbody tr').filter(has_text='P000002')
+        row.get_by_role('button', name='EPL', exact=True).click()
+        expect(page.locator('h1')).to_have_text('اسناد EPL — P000002')
+        switch = page.get_by_role('link', name='رفتن به DPL', exact=True)
+        expect(switch).to_be_visible()
+        params = parse_qs(urlparse(switch.get_attribute('href')).query)
+        assert params == {'p': ['P000002'], 'mode': ['demo']}, params
+        page.screenshot(path=str(out / f'epl-{width}.png'), full_page=True)
+        switch.click()
+        expect(page.locator('h1')).to_have_text('اسناد DPL — P000002')
+        ok(f'{width}: EPL to DPL keeps the selected project and demo mode')
+        page.screenshot(path=str(out / f'dpl-{width}.png'), full_page=True)
+        page.get_by_role('link', name='رفتن به EPL', exact=True).click()
+        expect(page.locator('h1')).to_have_text('اسناد EPL — P000002')
+        ok(f'{width}: DPL to EPL keeps the selected project')
+        page.get_by_role('link', name='بازگشت به پروژه‌ها', exact=True).click()
+        expect(search).to_have_value('آفتاب')
+        expect(page.locator('#current-project tbody tr:visible')).to_have_count(3)
+        ok(f'{width}: returning from documents restores the filtered project list')
+        page.get_by_role('tab', name='پروژه های تکمیل شده').click()
+        search.fill('پارس')
+        expect(page.locator('#completed-project tbody tr:visible')).to_have_count(2)
+        page.get_by_role('link', name='نمایش شناسنامهٔ P000017', exact=True).click()
+        page.go_back(wait_until='networkidle')
+        expect(search).to_have_value('پارس')
+        expect(page.get_by_role('tab', name='پروژه های تکمیل شده')).to_have_attribute('aria-selected', 'true')
+        expect(page.locator('#completed-project tbody tr:visible')).to_have_count(2)
+        ok(f'{width}: completed tab and its query survive browser Back')
+        page.reload(wait_until='networkidle')
+        expect(page.get_by_role('tab', name='پروژه های تکمیل شده')).to_have_attribute('aria-selected', 'true')
+        expect(search).to_have_value('پارس')
+        ok(f'{width}: selected tab survives reload')
+        page.get_by_role('button', name='پاک کردن جست‌وجو', exact=True).click()
+        expect(search).to_have_value('')
+        expect(page.locator('#completed-project tbody tr:visible')).to_have_count(4)
+        page.get_by_role('tab', name='پروژه های در جریان').click()
+        expect(page.locator('#current-project tbody tr:visible')).to_have_count(16)
+        ok(f'{width}: explicit clear restores all records in each tab')
+        search.fill('P۰۰۰۰۰۲')
+        expect(page.locator('#current-project tbody tr:visible')).to_have_count(1)
+        ok(f'{width}: Persian digits work in project codes')
+        search.fill('عبارت بدون نتیجه')
+        expect(page.locator('#current-project tbody tr:visible')).to_have_count(0)
+        page.reload(wait_until='networkidle')
+        expect(search).to_have_value('عبارت بدون نتیجه')
+        expect(page.locator('#current-project tbody tr:visible')).to_have_count(0)
+        ok(f'{width}: zero-result search is preserved')
+        page.goto(base + '/mehrabad/prjman?mode=demo&q=پارس&tab=completed-project-tab', wait_until='networkidle')
+        expect(search).to_have_value('پارس')
+        expect(page.get_by_role('tab', name='پروژه های تکمیل شده')).to_have_attribute('aria-selected', 'true')
+        expect(page.locator('#completed-project tbody tr:visible')).to_have_count(2)
+        ok(f'{width}: filter and tab can be restored from their URL')
+        assert not page.evaluate('document.documentElement.scrollWidth > innerWidth')
+        assert not errors, errors
+        assert not failures, failures
+        ok(f'{width}: no page errors, failed HTTP responses, or document overflow')
+        context.close()
+    browser.close()
+result = {'passed': len(checks), 'failed': 0, 'checks': checks}
+(out / 'demo-features-results.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
+print(json.dumps(result, ensure_ascii=False, indent=2))
+print('Artifacts:', out)

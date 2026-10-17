@@ -18,7 +18,7 @@ if errorlevel 1 (
     pause
     exit /b 1
 )
-start "" /b powershell.exe -NoProfile -Command "$u='http://127.0.0.1:8033/mehrabad/home'; for($n=0;$n -lt 40;$n++){try{$r=Invoke-WebRequest -Uri $u -UseBasicParsing -TimeoutSec 1;if($r.StatusCode -eq 200){Start-Process $u;break}}catch{};Start-Sleep -Milliseconds 250}"
+start "" /b powershell.exe -NoProfile -Command "$u='http://127.0.0.1:8033/mehrabad/home?mode=demo'; for($n=0;$n -lt 40;$n++){try{$r=Invoke-WebRequest -Uri $u -UseBasicParsing -TimeoutSec 1;if($r.StatusCode -eq 200){Start-Process $u;break}}catch{};Start-Sleep -Milliseconds 250}"
 "%MEHRABAD_PHP%" -n -S 127.0.0.1:8033 -t "%~dp0public" "%~dp0router.php"
 set "MEHRABAD_EXIT=%ERRORLEVEL%"
 if not "%MEHRABAD_EXIT%"=="0" pause

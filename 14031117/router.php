@@ -70,7 +70,7 @@ if (preg_match('~^/(?:mehrabad/)?assets/(.+)$~', $path, $match)) {
 }
 if ($path === '/' || $path === UI_BASE || $path === UI_BASE.'/') { header('Location: '.UI_BASE.'/home', true, 302); exit; }
 
-$mode = ($_GET['mode'] ?? '') === 'demo' ? 'demo' : 'backup';
+$mode = ($_GET['mode'] ?? 'demo') === 'backup' ? 'backup' : 'demo';
 $projectFile = $mode === 'demo' ? 'example-projects.json' : 'projects.json';
 $projects = json_decode(file_get_contents(__DIR__.'/data/'.$projectFile), true, 512, JSON_THROW_ON_ERROR);
 if (!is_array($projects) || !array_is_list($projects)) reply(500, 'Invalid local project data');
@@ -95,7 +95,7 @@ final class LocalUI {
     public function __construct(private ?string $siteRoot, private string $route, private ?array $project, private string $mode) {}
     public function url(string $path): string {
         $url = UI_BASE.'/'.ltrim($path, '/');
-        return $this->mode === 'demo' ? $url.(str_contains($url, '?') ? '&' : '?').'mode=demo' : $url;
+        return $url.(str_contains($url, '?') ? '&' : '?').'mode='.$this->mode;
     }
     // Existing templates use both echo expressions and statement-style asset calls.
     public function asset(string $path): string { echo htmlspecialchars(UI_BASE.'/assets/'.$path, ENT_QUOTES, 'UTF-8'); return ''; }
@@ -182,7 +182,7 @@ final class LocalUI {
     private function dataStatus(array $projects): void {
         echo '<section class="ui-data-status"><h2>'.($this->mode === 'demo' ? 'حالت نمونهٔ آزمایشی' : 'اطلاعات پروژه‌ها در این بکاپ نیست').'</h2>';
         if ($this->mode === 'demo') {
-            echo '<p>پروژه‌های این صفحه فقط برای امتحان ظاهر و دکمه‌ها ساخته شده‌اند و جزو اطلاعات بکاپ نیستند.</p><a class="ui-mode-link" href="'.UI_BASE.'/prjman">بازگشت به حالت بکاپ</a>';
+            echo '<p>۲۰ پروژهٔ آزمایشی برای امتحان جست‌وجو، صفحات و دکمه‌ها آماده شده‌اند. جست‌وجو و تب انتخاب‌شده هنگام برگشت حفظ می‌شوند.</p>';
         } elseif (!$projects) {
             echo '<p>این آرشیو کد صفحات را دارد، اما رکوردهای پروژه، مشتری، اطلاعات فنی و مالی را ندارد. برای حفظ صحت اطلاعات، پروژه‌ای به نام دادهٔ بکاپ اضافه نشده است.</p><a class="ui-mode-link" href="'.UI_BASE.'/prjman?mode=demo">نمایش نمونهٔ آزمایشی جدا از بکاپ</a>';
         } else {
@@ -199,10 +199,12 @@ final class LocalUI {
             echo '</div></section>';
             $this->dataStatus($projects);
         } elseif ($this->route === 'source-map') {
-            echo '<h1 class="ui-title">راهنمای تغییر جای دکمه</h1><section class="ui-panel"><p>فهرست پروژه‌ها و شناسنامه با قالب PHP بکاپ 14031117 نمایش داده می‌شوند. سربرگ و داشبورد برای اجرای محلی ساخته شده‌اند.</p><table class="ui-simple-table"><thead><tr><th>صفحه</th><th>فایل همین بسته</th><th>دکمه یا محل</th></tr></thead><tbody><tr><td>فهرست پروژه‌ها</td><td dir="ltr">app/views/project/prjman.php</td><td>ستون عملیات و دکمه‌های DCC، EPL و DPL</td></tr><tr><td>شناسنامهٔ پروژه</td><td dir="ltr">app/views/project/showprj.php</td><td dir="ltr">saveAllSheetsprj · reloadAllSheets · ender_return</td></tr><tr><td>ظاهر محلی</td><td dir="ltr">public/ui/local.css</td><td>سربرگ، منو و تنظیمات نمایش محلی</td></tr></tbody></table><p>حالت عادی دادهٔ پروژه ندارد. حالت نمونه جداگانه فعال می‌شود و ذخیرهٔ شناسنامه فقط یک پیش‌نویس در مرورگر می‌سازد. ورود واقعی، گردش تأیید، ارسال ایمیل و تولید Excel/PDF سایت اصلی در این نسخه اجرا نمی‌شوند.</p></section>';
+            echo '<h1 class="ui-title">راهنمای تغییر جای دکمه</h1><section class="ui-panel"><p>فهرست پروژه‌ها و شناسنامه با قالب PHP بکاپ 14031117 نمایش داده می‌شوند. نسخهٔ آزمایشی با ۲۰ پروژه باز می‌شود؛ سربرگ و داشبورد برای اجرای محلی ساخته شده‌اند.</p><table class="ui-simple-table"><thead><tr><th>صفحه</th><th>فایل همین بسته</th><th>دکمه یا محل</th></tr></thead><tbody><tr><td>فهرست پروژه‌ها</td><td dir="ltr">app/views/project/prjman.php</td><td>ستون عملیات و دکمه‌های EPL و DPL</td></tr><tr><td>شناسنامهٔ پروژه</td><td dir="ltr">app/views/project/showprj.php</td><td dir="ltr">saveAllSheetsprj · reloadAllSheets · ender_return</td></tr><tr><td>جست‌وجو و حافظهٔ فهرست</td><td dir="ltr">public/ui/local.js</td><td>نگهداری جست‌وجو و تب انتخاب‌شده هنگام برگشت</td></tr><tr><td>انتقال EPL و DPL</td><td dir="ltr">router.php</td><td>دکمهٔ رفتن به سند مقابل با همان کد پروژه</td></tr></tbody></table><p>ذخیرهٔ شناسنامه فقط پیش‌نویس مرورگر است. ورود واقعی، گردش تأیید، ارسال ایمیل و تولید Excel/PDF سایت اصلی در این نسخه اجرا نمی‌شوند.</p></section>';
         } else {
             $p=$this->project; $kind=$this->route==='prjman/epl'?'EPL':'DPL';
-            echo '<h1 class="ui-title">اسناد '.$kind.' — '.$p['proj_code'].'</h1><p class="ui-subtitle">'.$p['proj_name'].' · جدول آزمایشی برای بررسی مسیر صفحات</p><section class="ui-panel"><a class="ui-back" href="'.$this->url('prjman/show/?p='.$p['proj_code']).'">بازگشت به شناسنامه</a><table class="ui-simple-table"><thead><tr><th>ردیف</th><th>شرح</th><th>تعداد</th><th>وضعیت</th></tr></thead><tbody><tr><td>۱</td><td>تجهیزات نمونهٔ '.$p['proj_code'].'</td><td>۲</td><td>آزمایشی</td></tr></tbody></table><p>قالب این جدول محلی است؛ فرم کامل '.$kind.' سایت اصلی بازسازی نشده است.</p></section>';
+            $otherKind=$kind==='EPL'?'DPL':'EPL';
+            $otherRoute=$kind==='EPL'?'dpl':'epl';
+            echo '<h1 class="ui-title">اسناد '.$kind.' — '.$p['proj_code'].'</h1><p class="ui-subtitle">'.$p['proj_name'].' · جدول آزمایشی برای بررسی مسیر صفحات</p><section class="ui-panel"><nav class="ui-document-actions" aria-label="جابجایی اسناد پروژه"><a class="ui-document-switch" href="'.$this->url('prjman/'.$otherRoute.'/?p='.$p['proj_code']).'">رفتن به '.$otherKind.'</a><a class="ui-back" href="'.$this->url('prjman/show/?p='.$p['proj_code']).'">بازگشت به شناسنامه</a><a class="ui-back" href="'.$this->url('prjman').'">بازگشت به پروژه‌ها</a></nav><table class="ui-simple-table"><thead><tr><th>ردیف</th><th>شرح</th><th>تعداد</th><th>وضعیت</th></tr></thead><tbody><tr><td>۱</td><td>تجهیزات نمونهٔ '.$p['proj_code'].'</td><td>۲</td><td>آزمایشی</td></tr></tbody></table><p>قالب این جدول محلی است؛ فرم کامل '.$kind.' سایت اصلی بازسازی نشده است.</p></section>';
         }
     }
 }

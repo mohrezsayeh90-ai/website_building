@@ -2,10 +2,10 @@
 (() => {
   const state = JSON.parse(document.getElementById('ui-state').textContent);
   for (const id of ['modalOverlay','DCCForm']) { const overlay=document.getElementById(id); if(overlay)overlay.hidden=true; }
-  function localUrl(path) { const u=new URL(path,location.origin); if(state.mode==='demo')u.searchParams.set('mode','demo'); return u.pathname+u.search; }
+  function localUrl(path) { const u=new URL(path,location.origin); u.searchParams.set('mode',state.mode); return u.pathname+u.search; }
   for(const a of document.querySelectorAll('a[href]')) {
     const u=new URL(a.href);
-    if(state.mode==='demo' && u.origin===location.origin && u.pathname.startsWith('/mehrabad/') && !a.classList.contains('ui-mode-link'))a.href=localUrl(a.href);
+    if(u.origin===location.origin && u.pathname.startsWith('/mehrabad/') && !a.classList.contains('ui-mode-link'))a.href=localUrl(a.href);
   }
   const toast = document.getElementById('ui-toast');
   let timer;
@@ -32,7 +32,43 @@
     const search=document.createElement('label');search.className='ui-search';search.append('جست‌وجوی پروژه‌ها');const input=document.createElement('input');input.type='search';input.placeholder='کد، نام پروژه یا کارفرما';input.setAttribute('aria-label','جست‌وجوی پروژه‌ها');search.append(input);
     document.getElementById('default-styled-tab').parentElement.before(search);
     const rows=[...document.querySelectorAll('[role=tabpanel] tbody tr')];
-    input.addEventListener('input',()=>{for(const row of rows)row.hidden=!row.textContent.toLocaleLowerCase('fa').includes(input.value.trim().toLocaleLowerCase('fa'));});
+    const summary=document.createElement('span');summary.id='ui-search-summary';summary.setAttribute('role','status');input.setAttribute('aria-describedby',summary.id);search.append(summary);
+    const clear=document.createElement('button');clear.type='button';clear.textContent='پاک کردن جست‌وجو';clear.className='ui-clear-search';search.append(clear);
+    const storageKey='mehrabad-14031117-project-list:'+state.mode;
+    function normalize(value){return value.toLocaleLowerCase('fa').replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/[۰-۹]/g,d=>String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d))).replace(/[٠-٩]/g,d=>String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)));}
+    function filter(){
+      const query=normalize(input.value.trim());
+      for(const row of rows)row.hidden=!normalize(row.textContent).includes(query);
+      const active=tabs.find(tab=>tab.getAttribute('aria-selected')==='true');
+      const panel=active?document.querySelector(active.dataset.tabsTarget):null;
+      const count=panel?[...panel.querySelectorAll('tbody tr')].filter(row=>!row.hidden).length:0;
+      summary.textContent=count.toLocaleString('fa-IR')+' پروژه';clear.disabled=input.value==='';
+    }
+    function remember(){
+      const active=tabs.find(tab=>tab.getAttribute('aria-selected')==='true');
+      const saved={mode:state.mode,query:input.value,tab:active?.id||tabs[0]?.id,scrollY:window.scrollY};
+      try{sessionStorage.setItem(storageKey,JSON.stringify(saved));}catch{}
+      // Each history entry keeps its own filter; typing does not add Back entries.
+      const url=new URL(location.href);if(input.value)url.searchParams.set('q',input.value);else url.searchParams.delete('q');
+      if(active&&active!==tabs[0])url.searchParams.set('tab',active.id);else url.searchParams.delete('tab');
+      try{history.replaceState({...history.state,mehrabadProjectList:saved},'',url.pathname+url.search);}catch{}
+    }
+    function restoreList(){
+      const entry=history.state?.mehrabadProjectList;
+      let saved=entry?.mode===state.mode?entry:null;
+      if(!saved){try{saved=JSON.parse(sessionStorage.getItem(storageKey));}catch{}}
+      const url=new URL(location.href);
+      input.value=url.searchParams.has('q')?url.searchParams.get('q'):(typeof saved?.query==='string'?saved.query:'');
+      const tabId=url.searchParams.get('tab')||saved?.tab;
+      activate(tabs.find(tab=>tab.id===tabId)||tabs[0]);filter();
+      if(saved?.scrollY)requestAnimationFrame(()=>window.scrollTo(0,saved.scrollY));
+    }
+    input.addEventListener('input',()=>{filter();remember();});
+    for(const tab of tabs)tab.addEventListener('click',()=>{filter();remember();});
+    clear.addEventListener('click',()=>{input.value='';filter();remember();input.focus();});
+    window.addEventListener('pagehide',remember);
+    window.addEventListener('pageshow',()=>{restoreList();});
+    restoreList();
   }
   const detail=['prjman/show','project/editp'].includes(state.route);
   const key='mehrabad-14031117-draft:'+state.mode+':'+state.code;
